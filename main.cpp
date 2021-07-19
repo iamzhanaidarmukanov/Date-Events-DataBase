@@ -79,7 +79,7 @@ bool operator < (const Date_Event& first, const Date_Event& second) {
     return first.date.year < second.date.year;
 }
 
-// For Sorting my BD
+// For Sorting my Database
 bool compare_Date_Events(const Date_Event& first, const Date_Event& second) {
     if (first.date.year == second.date.year) {
         if (first.date.month == second.date.month) {
@@ -158,6 +158,31 @@ int main(int argc, const char *argv[])
             {
                 int d, m, y;
                 string input_event;
+                string dateLine;
+                string freeSpace;
+                getline(cin, freeSpace, ' ');
+                getline(cin, dateLine, ' ');
+                cin >> input_event;
+                Date input_date;
+                input_date = getDate(dateLine, y, m, d);
+                Date_Event input_date_event = {input_date, input_event};
+                
+                if (Database.size() == 0) {
+                    Database.push_back(input_date_event);
+                }
+                
+                else {
+                    bool flag = false;
+                    for (const auto& x : Database) {
+                        if (x == input_date_event) {
+                            flag = true;
+                        }
+                    }
+                    if (!flag) {
+                        Database.push_back(input_date_event);
+                        sort(Database.begin(), Database.end(), compare_Date_Events);
+                    }
+                }
             }
 
             // Implementing Delete Funtion
