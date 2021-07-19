@@ -127,6 +127,13 @@ void parseDate(const string& dateLine, int& y, int& m, int& d) {
 }
 
 
+// Assigning Date
+Date getDate(const string& dateLine, int& y, int& m, int& d) {
+    parseDate(dateLine, y, m, d);
+    Date date = {d, m, y};
+    return date;
+}
+
 
 // Start of the main function
 int main(int argc, const char *argv[])
