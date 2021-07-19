@@ -20,6 +20,25 @@ struct Date
     int year;
 };
 
+// Operator for same dates
+bool operator == (const Date& first, const Date& second) {
+    return (first.day == second.day && first.month == second.month && first.year == second.year);
+}
+// Operator for different dates
+bool operator != (const Date& first, const Date& second) {
+    return (first.day != second.day || first.month != second.month || first.year != second.year);
+}
+// Operator for comparing dates
+bool operator < (const Date& first, const Date& second) {
+    if (first.year == second.year) {
+        if (first.month == second.month) {
+            return first.day < second.day;
+        }
+        return first.month < second.month;
+    }
+    return first.year < second.year;
+}
+
 // Creating Date - Event structure
 struct Date_Event
 {
