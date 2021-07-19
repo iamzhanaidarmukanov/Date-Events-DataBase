@@ -275,6 +275,15 @@ int main(int argc, const char *argv[])
             // Implementing Print Function
             else if (query == "Print")
             {
+                for (const auto& x : Database) {
+                    cout << setfill('0');
+                    cout << setw(4) << x.date.year;
+                    cout << "-";
+                    cout << setw(2) << x.date.month;
+                    cout << "-";
+                    cout << setw(2) << x.date.day;
+                    cout << " " << x.event << endl;
+                }
             }
 
             // If query is invalid
