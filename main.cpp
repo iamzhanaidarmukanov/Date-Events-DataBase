@@ -79,6 +79,20 @@ bool operator < (const Date_Event& first, const Date_Event& second) {
     return first.date.year < second.date.year;
 }
 
+// For Sorting my BD
+bool compare_Date_Events(const Date_Event& first, const Date_Event& second) {
+    if (first.date.year == second.date.year) {
+        if (first.date.month == second.date.month) {
+            if (first.date.day == second.date.day) {
+                return first.event < second.event;
+            }
+            return first.date.day < second.date.day;
+        }
+        return first.date.month < second.date.month;
+    }
+    return first.date.year < second.date.year;
+}
+
 
 
 // Start of the main function
