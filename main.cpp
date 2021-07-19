@@ -190,6 +190,69 @@ int main(int argc, const char *argv[])
             {
                 int d, m, y;
                 string input_event;
+                string line;
+                string freeSpace;
+                getline(cin, freeSpace, ' ');
+                getline(cin, line);
+                stringstream myStream(line);
+                bool isThereEvent = true;
+                string dateLine;
+                myStream >> dateLine;
+                if (myStream.eof()) {
+                    isThereEvent = false;
+                }
+                Date input_date;
+                input_date = getDate(dateLine, y, m, d);
+                Date_Event input_date_event = {input_date, input_event};
+                
+//                if Del is with event
+                if (isThereEvent) {
+                    myStream >> input_event;
+                    Date_Event input_date_event = {input_date, input_event};
+                    bool flag = false;
+                    int index = 0;
+                    for (int i = 0; i < Database.size(); ++i) {
+                        if (Database[i] == input_date_event) {
+                            flag = true;
+                            index = i;
+                            cout << "Deleted successfully" << endl;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        Database.erase(Database.begin() + index);
+                    } else {
+                        cout << "Event not found" << endl;
+                    }
+                }
+                
+//                If Del is without event
+                else {
+                    int start = 0;
+                    bool flag = false;
+                    for (const auto& x : Database) {
+                        if (x.date == input_date) {
+                            flag = true;
+                        }
+                    }
+                    
+                    if (flag) {
+                        while (Database[start].date != input_date) {
+                            start++;
+                        }
+                        int finish = start;
+                        while (Database[finish].date == input_date && finish <= Database.size() - 1) {
+                            finish++;
+                        }
+                        Database.erase(Database.begin() + start, Database.begin() + finish);
+                        cout << "Deleted " << finish - start << " events" << endl;
+                        
+                        
+                    }
+                    else {
+                        cout << "Deleted 0 events" << endl;
+                    }
+                }
             }
 
             // Implementing Find Function
