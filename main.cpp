@@ -260,6 +260,16 @@ int main(int argc, const char *argv[])
             {
                 int d, m, y;
                 string dateLine;
+                string freeSpace;
+                getline(cin, freeSpace, ' ');
+                getline(cin, dateLine);
+                Date input_date;
+                input_date = getDate(dateLine, y, m, d);
+                for (const auto& x : Database) {
+                    if (x.date == input_date) {
+                        cout << x.event << endl;
+                    }
+                }
             }
 
             // Implementing Print Function
