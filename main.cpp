@@ -12,6 +12,8 @@
 #include <string>
 using namespace std;
 
+
+
 // Creating Date structure
 struct Date
 {
@@ -39,12 +41,45 @@ bool operator < (const Date& first, const Date& second) {
     return first.year < second.year;
 }
 
+
+
 // Creating Date - Event structure
 struct Date_Event
 {
     Date date;
     string event;
 };
+
+// Operator for same date-event
+bool operator == (const Date_Event& first, const Date_Event& second) {
+    return (first.date.day == second.date.day 
+    && first.date.month == second.date.month 
+    && first.date.year == second.date.year 
+    && first.event == second.event);
+}
+
+bool operator != (const Date_Event& first, const Date_Event& second) {
+    return (first.date.day != second.date.day 
+    || first.date.month != second.date.month 
+    || first.date.year != second.date.year 
+    || first.event != second.event);
+}
+
+// Operator for comparing date-event
+bool operator < (const Date_Event& first, const Date_Event& second) {
+    if (first.date.year == second.date.year) {
+        if (first.date.month == second.date.month) {
+            if (first.date.day == second.date.day) {
+                return first.event < second.event;
+            }
+            return first.date.day < second.date.day;
+        }
+        return first.date.month < second.date.month;
+    }
+    return first.date.year < second.date.year;
+}
+
+
 
 // Start of the main function
 int main(int argc, const char *argv[])
