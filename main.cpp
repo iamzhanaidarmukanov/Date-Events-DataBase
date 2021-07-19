@@ -12,8 +12,6 @@
 #include <string>
 using namespace std;
 
-
-
 // Creating Date structure
 struct Date
 {
@@ -23,25 +21,28 @@ struct Date
 };
 
 // Operator for same dates
-bool operator == (const Date& first, const Date& second) {
+bool operator==(const Date &first, const Date &second)
+{
     return (first.day == second.day && first.month == second.month && first.year == second.year);
 }
 // Operator for different dates
-bool operator != (const Date& first, const Date& second) {
+bool operator!=(const Date &first, const Date &second)
+{
     return (first.day != second.day || first.month != second.month || first.year != second.year);
 }
 // Operator for comparing dates
-bool operator < (const Date& first, const Date& second) {
-    if (first.year == second.year) {
-        if (first.month == second.month) {
+bool operator<(const Date &first, const Date &second)
+{
+    if (first.year == second.year)
+    {
+        if (first.month == second.month)
+        {
             return first.day < second.day;
         }
         return first.month < second.month;
     }
     return first.year < second.year;
 }
-
-
 
 // Creating Date - Event structure
 struct Date_Event
@@ -51,25 +52,25 @@ struct Date_Event
 };
 
 // Operator for same date-event
-bool operator == (const Date_Event& first, const Date_Event& second) {
-    return (first.date.day == second.date.day 
-    && first.date.month == second.date.month 
-    && first.date.year == second.date.year 
-    && first.event == second.event);
+bool operator==(const Date_Event &first, const Date_Event &second)
+{
+    return (first.date.day == second.date.day && first.date.month == second.date.month && first.date.year == second.date.year && first.event == second.event);
 }
 
-bool operator != (const Date_Event& first, const Date_Event& second) {
-    return (first.date.day != second.date.day 
-    || first.date.month != second.date.month 
-    || first.date.year != second.date.year 
-    || first.event != second.event);
+bool operator!=(const Date_Event &first, const Date_Event &second)
+{
+    return (first.date.day != second.date.day || first.date.month != second.date.month || first.date.year != second.date.year || first.event != second.event);
 }
 
 // Operator for comparing date-event
-bool operator < (const Date_Event& first, const Date_Event& second) {
-    if (first.date.year == second.date.year) {
-        if (first.date.month == second.date.month) {
-            if (first.date.day == second.date.day) {
+bool operator<(const Date_Event &first, const Date_Event &second)
+{
+    if (first.date.year == second.date.year)
+    {
+        if (first.date.month == second.date.month)
+        {
+            if (first.date.day == second.date.day)
+            {
                 return first.event < second.event;
             }
             return first.date.day < second.date.day;
@@ -80,10 +81,14 @@ bool operator < (const Date_Event& first, const Date_Event& second) {
 }
 
 // For Sorting my Database
-bool compare_Date_Events(const Date_Event& first, const Date_Event& second) {
-    if (first.date.year == second.date.year) {
-        if (first.date.month == second.date.month) {
-            if (first.date.day == second.date.day) {
+bool compare_Date_Events(const Date_Event &first, const Date_Event &second)
+{
+    if (first.date.year == second.date.year)
+    {
+        if (first.date.month == second.date.month)
+        {
+            if (first.date.day == second.date.day)
+            {
                 return first.event < second.event;
             }
             return first.date.day < second.date.day;
@@ -93,47 +98,54 @@ bool compare_Date_Events(const Date_Event& first, const Date_Event& second) {
     return first.date.year < second.date.year;
 }
 
-
 // Parsing Date input from the date string
-void parseDate(const string& dateLine, int& y, int& m, int& d) {
+void parseDate(const string &dateLine, int &y, int &m, int &d)
+{
     stringstream ss(dateLine);
     string error = "Wrong date format: " + dateLine;
-    if(!(ss >> y)) {
+    if (!(ss >> y))
+    {
         throw invalid_argument(error);
     }
-    if (ss.peek() != '-') {
-        throw invalid_argument(error);
-    }
-    ss.ignore(1);
-    if(!(ss >> m)) {
-        throw invalid_argument(error);
-    }
-    if (ss.peek() != '-') {
+    if (ss.peek() != '-')
+    {
         throw invalid_argument(error);
     }
     ss.ignore(1);
-    if(!(ss >> d)) {
+    if (!(ss >> m))
+    {
         throw invalid_argument(error);
     }
-    if(!ss.eof()) {
+    if (ss.peek() != '-')
+    {
         throw invalid_argument(error);
     }
-    if(m < 1 || m > 12) {
+    ss.ignore(1);
+    if (!(ss >> d))
+    {
+        throw invalid_argument(error);
+    }
+    if (!ss.eof())
+    {
+        throw invalid_argument(error);
+    }
+    if (m < 1 || m > 12)
+    {
         throw invalid_argument("Month value is invalid: " + to_string(m));
     }
-    if(d < 1 || d > 31) {
+    if (d < 1 || d > 31)
+    {
         throw invalid_argument("Day value is invalid: " + to_string(d));
     }
 }
 
-
 // Assigning Date
-Date getDate(const string& dateLine, int& y, int& m, int& d) {
+Date getDate(const string &dateLine, int &y, int &m, int &d)
+{
     parseDate(dateLine, y, m, d);
     Date date = {d, m, y};
     return date;
 }
-
 
 // Start of the main function
 int main(int argc, const char *argv[])
@@ -166,19 +178,24 @@ int main(int argc, const char *argv[])
                 Date input_date;
                 input_date = getDate(dateLine, y, m, d);
                 Date_Event input_date_event = {input_date, input_event};
-                
-                if (Database.size() == 0) {
+
+                if (Database.size() == 0)
+                {
                     Database.push_back(input_date_event);
                 }
-                
-                else {
+
+                else
+                {
                     bool flag = false;
-                    for (const auto& x : Database) {
-                        if (x == input_date_event) {
+                    for (const auto &x : Database)
+                    {
+                        if (x == input_date_event)
+                        {
                             flag = true;
                         }
                     }
-                    if (!flag) {
+                    if (!flag)
+                    {
                         Database.push_back(input_date_event);
                         sort(Database.begin(), Database.end(), compare_Date_Events);
                     }
@@ -198,58 +215,70 @@ int main(int argc, const char *argv[])
                 bool isThereEvent = true;
                 string dateLine;
                 myStream >> dateLine;
-                if (myStream.eof()) {
+                if (myStream.eof())
+                {
                     isThereEvent = false;
                 }
                 Date input_date;
                 input_date = getDate(dateLine, y, m, d);
                 Date_Event input_date_event = {input_date, input_event};
-                
-//                if Del is with event
-                if (isThereEvent) {
+
+                //                if Del is with event
+                if (isThereEvent)
+                {
                     myStream >> input_event;
                     Date_Event input_date_event = {input_date, input_event};
                     bool flag = false;
                     int index = 0;
-                    for (int i = 0; i < Database.size(); ++i) {
-                        if (Database[i] == input_date_event) {
+                    for (int i = 0; i < Database.size(); ++i)
+                    {
+                        if (Database[i] == input_date_event)
+                        {
                             flag = true;
                             index = i;
                             cout << "Deleted successfully" << endl;
                             break;
                         }
                     }
-                    if (flag) {
+                    if (flag)
+                    {
                         Database.erase(Database.begin() + index);
-                    } else {
+                    }
+                    else
+                    {
                         cout << "Event not found" << endl;
                     }
                 }
-                
-//                If Del is without event
-                else {
+
+                //                If Del is without event
+                else
+                {
                     int start = 0;
                     bool flag = false;
-                    for (const auto& x : Database) {
-                        if (x.date == input_date) {
+                    for (const auto &x : Database)
+                    {
+                        if (x.date == input_date)
+                        {
                             flag = true;
                         }
                     }
-                    
-                    if (flag) {
-                        while (Database[start].date != input_date) {
+
+                    if (flag)
+                    {
+                        while (Database[start].date != input_date)
+                        {
                             start++;
                         }
                         int finish = start;
-                        while (Database[finish].date == input_date && finish <= Database.size() - 1) {
+                        while (Database[finish].date == input_date && finish <= Database.size() - 1)
+                        {
                             finish++;
                         }
                         Database.erase(Database.begin() + start, Database.begin() + finish);
                         cout << "Deleted " << finish - start << " events" << endl;
-                        
-                        
                     }
-                    else {
+                    else
+                    {
                         cout << "Deleted 0 events" << endl;
                     }
                 }
@@ -265,8 +294,10 @@ int main(int argc, const char *argv[])
                 getline(cin, dateLine);
                 Date input_date;
                 input_date = getDate(dateLine, y, m, d);
-                for (const auto& x : Database) {
-                    if (x.date == input_date) {
+                for (const auto &x : Database)
+                {
+                    if (x.date == input_date)
+                    {
                         cout << x.event << endl;
                     }
                 }
@@ -275,7 +306,8 @@ int main(int argc, const char *argv[])
             // Implementing Print Function
             else if (query == "Print")
             {
-                for (const auto& x : Database) {
+                for (const auto &x : Database)
+                {
                     cout << setfill('0');
                     cout << setw(4) << x.date.year;
                     cout << "-";
