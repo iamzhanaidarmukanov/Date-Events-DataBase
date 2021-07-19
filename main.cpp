@@ -94,6 +94,39 @@ bool compare_Date_Events(const Date_Event& first, const Date_Event& second) {
 }
 
 
+// Parsing Date input from the date string
+void parseDate(const string& dateLine, int& y, int& m, int& d) {
+    stringstream ss(dateLine);
+    string error = "Wrong date format: " + dateLine;
+    if(!(ss >> y)) {
+        throw invalid_argument(error);
+    }
+    if (ss.peek() != '-') {
+        throw invalid_argument(error);
+    }
+    ss.ignore(1);
+    if(!(ss >> m)) {
+        throw invalid_argument(error);
+    }
+    if (ss.peek() != '-') {
+        throw invalid_argument(error);
+    }
+    ss.ignore(1);
+    if(!(ss >> d)) {
+        throw invalid_argument(error);
+    }
+    if(!ss.eof()) {
+        throw invalid_argument(error);
+    }
+    if(m < 1 || m > 12) {
+        throw invalid_argument("Month value is invalid: " + to_string(m));
+    }
+    if(d < 1 || d > 31) {
+        throw invalid_argument("Day value is invalid: " + to_string(d));
+    }
+}
+
+
 
 // Start of the main function
 int main(int argc, const char *argv[])
