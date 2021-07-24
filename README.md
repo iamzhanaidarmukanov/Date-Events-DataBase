@@ -40,29 +40,20 @@ If the user entered an unknown command, then the program should report this by d
 If the date does not correspond to the Year-Month-Day format, where Year, Month and Day are arbitrary integers, then the program should print "Wrong date format: DATE", where DATE is what the user entered instead of the date (before a space). Please note that the parts of the date are separated by exactly one hyphen, and the date itself should not contain extra characters either before the year or after the day. Date parts cannot be empty, but can be zero or even negative.
 
 Example input:
-Add 0-1-2 event1
 
-Add 1-2-3 event2
-
-Find 0-1-2
-
-Del 0-1-2
-
-Print
-
-Del 1-2-3 event2
-
-Del 1-2-3 event2
+    Add 0-1-2 event1
+    Add 1-2-3 event2
+    Find 0-1-2
+    Del 0-1-2
+    Print
+    Del 1-2-3 event2
+    Del 1-2-3 event2
 
 
 Output:
 
-event1
-
-Deleted 1 events
-
-0001-02-03 event2
-
-Deleted successfully
-
-Event not found
+    event1
+    Deleted 1 events
+    0001-02-03 event2
+    Deleted successfully
+    Event not found
